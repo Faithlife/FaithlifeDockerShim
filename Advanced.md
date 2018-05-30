@@ -5,10 +5,10 @@ DockerShim does *not* intercept any application-level logs by default. Any direc
 ```C#
 static void Main(string[] args) => DockerShimRunner.Main(new DockerShimSettings(), context =>
 {
-	Console.SetOut(context.LoggingConsoleStdout);
-	Console.SetError(context.LoggingConsoleStdout);
+  Console.SetOut(context.LoggingConsoleStdout);
+  Console.SetError(context.LoggingConsoleStdout);
 
-	Console.WriteLine("Hello\nWorld!"); // Formatted and written to stdout as one line, not two
+  Console.WriteLine("Hello\nWorld!"); // Formatted and written to stdout as one line, not two
 });
 ```
 
