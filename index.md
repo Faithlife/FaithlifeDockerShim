@@ -1,12 +1,12 @@
-# ProjectName
+# Faithlife.DockerShim
 
-**ProjectName** description
+**Faithlife.DockerShim** description
 
 ## Installation
 
-ProjectName should be installed [via NuGet](https://www.nuget.org/packages/ProjectName).
+Faithlife.DockerShim should be installed [via NuGet](https://www.nuget.org/packages/Faithlife.DockerShim).
 
 ## Documentation
 
-* [Reference Documentation](ProjectName.md)
+* [Reference Documentation](Faithlife.DockerShim.md)
 
