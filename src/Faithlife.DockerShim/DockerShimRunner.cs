@@ -105,9 +105,7 @@ namespace Faithlife.DockerShim
 				// Exit after our maximum runtime.
 				ShutdownAfterMaximumRuntime();
 
-				int exitCode;
-				using (m_log.BeginScope("Host {hostname}", hostname))
-					exitCode = action(m_context).GetAwaiter().GetResult();
+				var exitCode = action(m_context).GetAwaiter().GetResult();
 				SetExitCode(exitCode);
 				m_log.Exiting(exitCode);
 				return exitCode;
