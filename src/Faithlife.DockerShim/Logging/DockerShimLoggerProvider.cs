@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Threading;
-using Faithlife.Utility;
 using Microsoft.Extensions.Logging;
 
 namespace Faithlife.DockerShim.Logging
@@ -13,7 +9,7 @@ namespace Faithlife.DockerShim.Logging
 	/// <summary>
 	/// The logger provider used by DockerShim. Sends logs to an <see cref="IStringLog"/>.
 	/// </summary>
-	internal sealed partial class DockerShimLoggerProvider : ILoggerProvider
+	internal sealed partial class DockerShimLoggerProvider : ILoggerProvider, ISupportExternalScope
 	{
 		/// <summary>
 		/// Creates a new logger provider.
@@ -34,7 +30,6 @@ namespace Faithlife.DockerShim.Logging
 			m_formatter = formatter;
 			m_filter = filter;
 			m_loggers = new ConcurrentDictionary<string, ILogger>();
-			m_scopes = new AsyncLocal<ImmutableStack<object>>();
 		}
 
 		/// <inheritdoc/>
@@ -47,12 +42,18 @@ namespace Faithlife.DockerShim.Logging
 
 		void IDisposable.Dispose() { }
 
+		void ISupportExternalScope.SetScopeProvider(IExternalScopeProvider scopeProvider)
+		{
+			m_externalScopeProvider = scopeProvider;
+		}
+
 		private void Log(string loggerName, LogLevel logLevel, EventId eventId, string message, Exception exception,
 			IEnumerable<KeyValuePair<string, object>> state)
 		{
 			if (message == "" && exception == null)
 				return;
-			var scopes = Scopes.Reverse();
+			var scopes = new List<object>();
+			m_externalScopeProvider?.ForEachScope((value, list) => list.Add(value), scopes);
 			var text = m_formatter(new LogEvent
 			{
 				LoggerName = loggerName,
@@ -68,23 +69,12 @@ namespace Faithlife.DockerShim.Logging
 
 		private bool IsEnabled(string loggerName, LogLevel logLevel) => m_filter(loggerName, logLevel);
 
-		private IDisposable BeginScope<TState>(TState state)
-		{
-			var previousScopes = Scopes;
-			Scopes = previousScopes.Push(state);
-			return Scope.Create(() => Scopes = previousScopes);
-		}
-
-		private ImmutableStack<object> Scopes
-		{
-			get => m_scopes.Value ?? ImmutableStack<object>.Empty;
-			set => m_scopes.Value = value.IsEmpty ? null : value;
-		}
+		private IDisposable BeginScope<TState>(TState state) => m_externalScopeProvider?.Push(state);
 
 		private readonly IStringLog m_stringLog;
 		private readonly Func<LogEvent, string> m_formatter;
 		private readonly Func<string, LogLevel, bool> m_filter;
 		private readonly ConcurrentDictionary<string, ILogger> m_loggers;
-		private readonly AsyncLocal<ImmutableStack<object>> m_scopes;
+		private IExternalScopeProvider m_externalScopeProvider;
 	}
 }
