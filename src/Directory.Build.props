@@ -1,13 +1,13 @@
 <Project>
 
   <PropertyGroup>
-    <FrameworkPathOverride Condition="'$(TargetFramework)' == 'net461' and '$(MONO_ROOT)' != ''">$(MONO_ROOT)/lib/mono/4.6.1-api/</FrameworkPathOverride>
-    <FrameworkPathOverride Condition="'$(TargetFramework)' == 'net47' and '$(MONO_ROOT)' != ''">$(MONO_ROOT)/lib/mono/4.7-api/</FrameworkPathOverride>
+    <VersionPrefix>0.1.0</VersionPrefix>
+
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SourceLinkCreate>true</SourceLinkCreate>
-    <NoWarn>$(NoWarn);1591</NoWarn>
     <DebugType>portable</DebugType>
     <DebugSymbols>True</DebugSymbols>
     <RepositoryName>FaithlifeDockerShim</RepositoryName>
@@ -17,8 +17,6 @@
     <RepositoryUrl>https://github.com/Faithlife/$(RepositoryName).git</RepositoryUrl>
     <Authors>Faithlife Corporation</Authors>
     <Copyright>Copyright Faithlife Corporation</Copyright>
-    <SourceLinkUrl>https://raw.githubusercontent.com/Faithlife/$(RepositoryName)/{commit}/*</SourceLinkUrl>
-    <SourceLinkOriginUrl>https://github.com/Faithlife/$(RepositoryName).git</SourceLinkOriginUrl>
   </PropertyGroup>
 
   <ItemGroup>
