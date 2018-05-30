@@ -1,4 +1,4 @@
-# Contributing to ProjectName
+# Contributing to Faithlife.DockerShim
 
 ## Prerequisites
 
@@ -13,6 +13,6 @@
 
 ## How to Build
 
-* Clone the repository: `git clone https://github.com/Faithlife/RepoName.git`
-* `cd RepoName`
-* `dotnet test tests/ProjectName.Tests`
+* Clone the repository: `git clone https://github.com/Faithlife/FaithlifeDockerShim.git`
+* `cd FaithlifeDockerShim`
+* `dotnet test tests/Faithlife.DockerShim.Tests`
