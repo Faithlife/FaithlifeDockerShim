@@ -41,18 +41,18 @@ Docker applications that do their own application logging directly will want to 
 ```C#
 static void Main(string[] args)
 {
-	var myLoggerFactory = new LoggerFactory();
-	myLoggerFactory.AddMyOwnProvider(); // log4net, seq, gelf, whatever...
+  var myLoggerFactory = new LoggerFactory();
+  myLoggerFactory.AddMyOwnProvider(); // log4net, seq, gelf, whatever...
 
-	var settings = new DockerShimSettings
-	{
-		MaximumRuntime = TimeSpan.FromHours(2),
+  var settings = new DockerShimSettings
+  {
+    MaximumRuntime = TimeSpan.FromHours(2),
     LoggerFactory = myLoggerFactory,
-	};
-	DockerShimRunner.Main(settings, context =>
-	{
-		var loggerFactory = context.LoggerFactory; // Same instance as `myLoggerFactory` that we passed into the settings.
-	});
+  };
+  DockerShimRunner.Main(settings, context =>
+  {
+    var loggerFactory = context.LoggerFactory; // Same instance as `myLoggerFactory` that we passed into the settings.
+  });
 }
 ```
 
