@@ -3,6 +3,8 @@
   <PropertyGroup>
     <!-- net461 is necessary because XmlDocMarkdownGenerate does not support netstandard -->
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <Description>A library to help .NET Core Console applications adhere to Docker conventions.</Description>
+    <PackageTags>docker;core;console</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
