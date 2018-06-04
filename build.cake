@@ -107,6 +107,7 @@ Task("NuGetPackageTest")
 	});
 
 Task("NuGetPublish")
+	.WithCriteria(EnvironmentVariable("APPVEYOR_REPO_BRANCH") == "master")
 	.IsDependentOn("NuGetPackageTest")
 	.Does(() =>
 	{
