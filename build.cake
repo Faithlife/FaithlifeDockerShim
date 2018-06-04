@@ -11,7 +11,6 @@ var versionSuffix = Argument("versionSuffix", "");
 
 var solutionFileName = "Faithlife.DockerShim.sln";
 var docsProjects = new[] { "Faithlife.DockerShim" };
-var framework = "netstandard2.0";
 var docsRepoUri = "https://github.com/Faithlife/FaithlifeDockerShim.git";
 var docsSourceUri = "https://github.com/Faithlife/FaithlifeDockerShim/tree/master/src";
 
@@ -59,7 +58,7 @@ Task("UpdateDocs")
 		Information($"Updating documentation at {docsDirectory}.");
 		foreach (var docsProject in docsProjects)
 		{
-			XmlDocMarkdownGenerate(File($"src/{docsProject}/bin/{configuration}/{framework}/{docsProject}.dll").ToString(), $"{docsDirectory}{System.IO.Path.DirectorySeparatorChar}",
+			XmlDocMarkdownGenerate(File($"src/{docsProject}/bin/{configuration}/net461/{docsProject}.dll").ToString(), $"{docsDirectory}{System.IO.Path.DirectorySeparatorChar}",
 				new XmlDocMarkdownSettings { SourceCodePath = $"{docsSourceUri}/{docsProject}", NewLine = "\n", ShouldClean = true });
 		}
 
