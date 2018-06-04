@@ -4,5 +4,8 @@ dotnet: 2.1.4
 dist: trusty
 sudo: false
 
+install:
+- export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.5/
+
 script:
 - ./build.sh --target=NuGetPackage
